@@ -8,8 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "3 daily questions",
-  description: "This app is to help for reviewing",
+  description: "This app is designed to assist with reviews."
 };
+
 
 export default function RootLayout({
   children,
