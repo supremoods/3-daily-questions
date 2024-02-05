@@ -1,0 +1,38 @@
+@media screen and (max-width: 750px) {
+    .txt-number{
+        font-size: 125px;
+    }
+
+    .txt-title{
+        font-size: 60px;
+    }
+
+    .txt-titles{
+        line-height: 3em;
+    }
+
+    .txt-quote{
+        font-size: 30px;
+    }
+
+
+    .txt-start{
+        font-size: 30px;
+    }
+
+    .main-container{
+        width: 800px;
+    }
+
+    .main-wrapper{
+        padding: 2em;
+    }
+
+    .txt-based{
+        font-size:14px;
+    }
+
+    .txt-sub{
+        font-size:12px;
+    }
+}

@@ -62,10 +62,10 @@ const CustomCard: FC<
             <Card className={`w-full   h-full cursor-pointer ${isView ? 'm-h-[500px] justify-center flex items-center p-10' : 'p-4'}`} onClick={handleView}>
                 <div className="flex flex-col gap-5">
                     <div className="flex gap-2">
-                        <span className="text-black text-2xl ">
+                        <span className="text-black text-2xl txt-based">
                             {cardKey+1}. 
                         </span>
-                        <span className="text-black text-2xl ">
+                        <span className="text-black text-2xl txt-based">
                             {item.question}
                         </span>
                     </div>
@@ -74,7 +74,7 @@ const CustomCard: FC<
                             .sort() // Sort the keys alphabetically
                             .map((choiceKey, index) => (
                                 <div key={index}>
-                                    <span className="text-black text-2xl">
+                                    <span className="text-black text-2xl txt-based">
                                         {choiceKey}: {item.choices[choiceKey]}
                                     </span>
                                 </div>
@@ -85,17 +85,17 @@ const CustomCard: FC<
                         isView && 
                         <div>
                             <div onClick={toggleAnswer}>
-                                <span className="text-primary text-2xl">Show Answer &#8594; </span>
+                                <span className="text-primary text-2xl txt-based">Show Answer &#8594; </span>
                             </div>
                             {
                                 (open && showAnswer) &&
                                 <div>
-                                    <span className="text-primary font-bold text-2xl">{item.answer}</span>
+                                    <span className="text-primary font-bold text-2xl txt-based">{item.answer}</span>
                                     <div>
-                                        <span className="text-black font-bold text-xl">Explanation</span>
+                                        <span className="text-black font-bold text-xl txt-sub">Explanation</span>
                                     </div>
                                     <div>
-                                        <span className="text-black font-bold text-xl">{item.explanation}</span>
+                                        <span className="text-black font-bold text-xl txt-sub">{item.explanation}</span>
                                     </div>
                                 </div>
                             }

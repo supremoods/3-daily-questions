@@ -6,7 +6,6 @@ import { db } from "@/app/firebaseConfig";
 import { BsArrowUpSquareFill, BsArrowDownSquareFill } from "react-icons/bs";
 import { MdOutlineZoomInMap } from "react-icons/md";
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
-
 type ITEM = {
     explanation: string;
     question: string;
@@ -159,7 +158,7 @@ const Quizzes = () => {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>
-                        <span className="text-primary text-xl">
+                        <span className="text-primary text-xl txt-sub">
                             Are you sure you want to show the answer?
                         </span>
                     </ModalHeader>
