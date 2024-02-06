@@ -21,6 +21,7 @@ const itemsSchema = Yup.array().of(
 const questionnaire =  [
     {
         question: '',
+        attachment: '',
         a: '',
         b: '',
         c: '',
@@ -30,6 +31,7 @@ const questionnaire =  [
     },
     {
         question: '',
+        attachment: '',
         a: '',
         b: '',
         c: '',
@@ -39,6 +41,7 @@ const questionnaire =  [
     },
     {
         question: '',
+        attachment: '',
         a: '',
         b: '',
         c: '',
@@ -50,6 +53,7 @@ const questionnaire =  [
 const initialValues = {
     questionnaire: questionnaire.map(item => ({
         question: item.question,
+        attachment: item.attachment,
         a: item.a,
         b: item.b,
         c: item.c,
@@ -64,6 +68,7 @@ const submit = async (value: any)  => {
 
     const payload = value.questionnaire.map((e: any) => ({
         question: e.question,
+        attachment: e.attachment,
         choices: {
             a: e.a,
             b: e.b,
@@ -90,6 +95,7 @@ const AddItems = () =>{
     return (
         <>
             <div className="flex flex-col bg-secondary  min-h-screen p-24">
+
             <Formik
                 initialValues={initialValues}
                 validationSchema={itemsSchema}
@@ -109,6 +115,19 @@ const AddItems = () =>{
                                                     placeholder="Input your question ..."
                                                     className=' text-black'
                                                 ></Textarea>
+                                            </FormControl>
+                                        )}
+                                    </Field>
+                                    <Field name={`questionnaire[${index}].attachment`}>
+                                        {({ field, form }: any) => (
+                                            <FormControl>
+                                                <FormLabel className='text-primary'>Image</FormLabel>
+                                                <Input
+                                                    {...field}
+                                                    resize="none"
+                                                    placeholder="Add attachment link"
+                                                    className=' text-black'
+                                                ></Input>
                                             </FormControl>
                                         )}
                                     </Field>

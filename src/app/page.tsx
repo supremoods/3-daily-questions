@@ -19,11 +19,11 @@ export default function Home() {
 
   return (
     <div className="bg-secondary flex justify-center">
-      <div className="flex flex-col min-h-screen w-[1085px] main-container ">
-        <div className="min-h-screen flex flex-col items-center  p-24 justify-center main-wrapper">
+      <div className="flex flex-col min-h-screen sm:w-[1085px] w-[800px]">
+        <div className="min-h-screen flex flex-col items-center justify-center  sm:p-24 p-[2em]">
           <LandingPage scroll={scrollToQuizzes} />
         </div>
-        <div ref={quizzesRef} className='min-h-screen flex flex-col items-center justify-center p-24 main-wrapper'>
+        <div ref={quizzesRef} className='min-h-screen flex flex-col items-center justify-center sm:p-24 p-[2em]'>
           <Quizzes />
         </div>
       </div>

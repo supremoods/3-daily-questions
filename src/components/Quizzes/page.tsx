@@ -8,9 +8,11 @@ import { MdOutlineZoomInMap } from "react-icons/md";
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton } from "@chakra-ui/react";
 type ITEM = {
     explanation: string;
+    attachment: string;
     question: string;
     choices: { [key: string]: string };
     answer: string;
+    createdAt: string;
 };
 
 const Quizzes = () => {
@@ -36,23 +38,37 @@ const Quizzes = () => {
             const itemsCollection = await collection(db, 'items');
             const unsubscribe = onSnapshot(itemsCollection, (querySnapshot: QuerySnapshot) => {
                 const fetchedItems: ITEM[] = [];
+                const currentDate = new Date();
+            
                 querySnapshot.forEach((doc) => {
                     const data = doc.data().item;
-
-                    data.map((e: ITEM) => {
-                        const newItem: ITEM = {
-                            question: e.question || '',
-                            choices: e.choices || {},
-                            answer: e.answer || '',
-                            explanation: e.explanation
-                        };
-
-                        fetchedItems.push(newItem);
-
-                    })
+                    const itemCreatedAt = new Date(data[0].createdAt);
+            
+                    // Check if the current date is equal to itemCreatedAt (disregarding the time)
+                    if (currentDate.toISOString().split('T')[0] === itemCreatedAt.toISOString().split('T')[0]) {
+                        data.map((e: ITEM) => {
+                            const newItem: ITEM = {
+                                question: e.question || '',
+                                attachment: e.attachment || '',
+                                choices: e.choices || {},
+                                answer: e.answer || '',
+                                explanation: e.explanation || '',
+                                createdAt: e.createdAt  // Set createdAt if not available
+                            };
+            
+                            fetchedItems.push(newItem);
+                        });
+                    }
                 });
+                
                 setItems(fetchedItems);
             });
+            
+            // Don't forget to unsubscribe when the component unmounts
+            return () => {
+                unsubscribe();
+            };
+            
 
             return () => unsubscribe();
         } catch (error) {
@@ -116,7 +132,6 @@ const Quizzes = () => {
             }
         }
     }
-    
 
     return (
         <div className={`flex flex-col gap-5 `}>
@@ -124,8 +139,7 @@ const Quizzes = () => {
                 <div 
                 ref={(ref) => questionRefs.current[index] = ref}// Assigning ref dynamically
                 key={index}
-                className="w-full "
-
+                className="w-full m-h-screen"
                 >
                 <CustomCard
                     hideAnswer={hideAnswer}
@@ -141,14 +155,15 @@ const Quizzes = () => {
             ))}
             {viewCard && (
                 <div className="fixed top-0 right-0">
-                    <div className="min-h-screen flex flex-col items-center justify-between p-10">
-                        <div>
-                            <MdOutlineZoomInMap className="cursor-pointer text-[3em]" onClick={closeQuestion} />
+                    <div className=" bg-secondary flex flex-col items-center gap-4 p-2 m-5">
+                        <div className="flex flex-col gap-2">
+                            <MdOutlineZoomInMap className="cursor-pointer sm:text-[3em] text-[2em] " onClick={closeQuestion} />
                         </div>
-                        <div className="flex flex-col gap-2 items-center">
-                            <BsArrowUpSquareFill className="cursor-pointer text-[3em] hover:text-[2.8em]" onClick={handleArrowUp} />
-                            <BsArrowDownSquareFill className="cursor-pointer text-[3em]  hover:text-[2.8em]" onClick={handleArrowDown} />
+                        <div className="flex flex-col gap-2 justify-center items-center">
+                        <BsArrowUpSquareFill className="cursor-pointer sm:text-[3em] text-[2em] sm:hover:text-[2.8em] hover:text-[1.8em]" onClick={handleArrowUp} />
+                            <BsArrowDownSquareFill className="cursor-pointer sm:text-[3em] text-[2em]  sm:hover:text-[2.8em] hover:text-[1.8em]" onClick={handleArrowDown} />
                         </div>
+                     
                     </div>
                 </div>
             )}
@@ -158,7 +173,7 @@ const Quizzes = () => {
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>
-                        <span className="text-primary text-xl txt-sub">
+                        <span className="text-primary sm:text-xl text-[12px]">
                             Are you sure you want to show the answer?
                         </span>
                     </ModalHeader>
