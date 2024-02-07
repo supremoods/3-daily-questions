@@ -39,13 +39,17 @@ const Quizzes = () => {
             const unsubscribe = onSnapshot(itemsCollection, (querySnapshot: QuerySnapshot) => {
                 const fetchedItems: ITEM[] = [];
                 const currentDate = new Date();
+                // convert current Date to phillipine time zone
+                const currentDatePhilippine = currentDate.toLocaleString('en-US', {timeZone: 'Asia/Manila'});
             
                 querySnapshot.forEach((doc) => {
                     const data = doc.data().item;
                     const itemCreatedAt = new Date(data[0].createdAt);
-            
+                    // convert current Date to philippine time zone 
+                    const itemCreatedAtPhilippine = itemCreatedAt.toLocaleString('en-US', {timeZone: 'Asia/Manila'});
+
                     // Check if the current date is equal to itemCreatedAt (disregarding the time)
-                    if (currentDate.toISOString().split('T')[0] === itemCreatedAt.toISOString().split('T')[0]) {
+                    if (currentDatePhilippine.split(',')[0] === itemCreatedAtPhilippine.split(',')[0]) {
                         data.map((e: ITEM) => {
                             const newItem: ITEM = {
                                 question: e.question || '',
