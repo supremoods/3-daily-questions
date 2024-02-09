@@ -26,7 +26,9 @@ const CustomCard: FC<
     {isView: boolean} & 
     {show:(show:boolean)=>void} & 
     {open:boolean} &
-    {hideAnswer:()=>void}
+    {hideAnswer:()=>void} &
+    {answer:(choice:string, answer:string, index: number)=>void} &
+    any
     > = 
     ({ 
         item, 
@@ -35,7 +37,9 @@ const CustomCard: FC<
         isView, 
         show, 
         open ,
-        hideAnswer
+        hideAnswer,
+        answer,
+        questionStatus
     }): JSX.Element => {
 
     const [showModal, setShowModal] = useState(false);
@@ -55,7 +59,6 @@ const CustomCard: FC<
             show(!showModal)
         }   
     }
-
     return (
         <div className={`w-full  flex items-center ${isView ? 'min-h-screen':'h-full'}`}>
             <Card className={`w-full   h-full cursor-pointer ${isView ? 'm-h-[500px] justify-center flex items-center p-10' : 'p-4'}`} onClick={handleView}>
@@ -81,11 +84,17 @@ const CustomCard: FC<
                         {isView && Object.keys(item.choices)
                             .sort() // Sort the keys alphabetically
                             .map((choiceKey, index) => (
-                                <div key={index}>
-                                    <span className="text-black sm:text-2xl text-sm">
+                                <div onClick={() => answer(choiceKey, item.answer, cardKey)} key={index}>
+                                    <span className={`text-black sm:text-2xl text-sm hover:text-primary ${
+                                        questionStatus['selected'] === choiceKey ?
+                                            questionStatus[`q${cardKey}`] === true ? 'text-green-500' : 
+                                            questionStatus[`q${cardKey}`] === false ? 'text-red-500' : ''
+                                            : `${questionStatus['selected']}`
+                                    }`}>
                                         {choiceKey}: {item.choices[choiceKey]}
                                     </span>
                                 </div>
+                            
                             ))}
                     </div>
 
@@ -109,9 +118,6 @@ const CustomCard: FC<
                             }
                         </div>
                   }
-
-
-                  
        
                 </div>
                

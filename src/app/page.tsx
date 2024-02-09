@@ -1,8 +1,9 @@
 'use client';
-import { Button, ButtonGroup } from '@chakra-ui/react'
 import LandingPage from "@/components/LandingPage/page";
 import Quizzes from "@/components/Quizzes/page";
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useRef, useState } from "react";
+import { FaHistory } from 'react-icons/fa';
 
 export default function Home() {
   const quizzesRef = useRef<HTMLDivElement>(null);
@@ -19,9 +20,16 @@ export default function Home() {
 
   return (
     <div className="bg-secondary flex justify-center">
-      <div className="flex flex-col min-h-screen sm:w-[1085px] w-[800px]">
+      <div className="flex flex-col min-h-screen sm:w-[1085px] w-[800px] relative">
         <div className="min-h-screen flex flex-col items-center justify-center  sm:p-24 p-[2em]">
           <LandingPage scroll={scrollToQuizzes} />
+          <div className="flex  absolute top-0 right-0 py-10 cursor-pointer">
+                <Link href="/history">
+                  <div className="bg-primary p-2 hover:bg-primary/90">
+                      <FaHistory size={26}/>
+                  </div>
+                </Link>
+            </div>
         </div>
         <div ref={quizzesRef} className='min-h-screen flex flex-col items-center justify-center sm:p-24 p-[2em]'>
           <Quizzes />
