@@ -175,7 +175,7 @@ const Quizzes = () => {
 
     return (
         <Skeleton isLoaded={isLoaded}>
-            <div className="flex absolute top-0 right-0 p-10">
+            <div className="flex absolute top-0 left-0 p-10">
                 <Datepicker onSelectedDateChanged={(event)=>FilterQuestionsByDates(event)}/>
             </div>
            { 
