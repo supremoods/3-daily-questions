@@ -169,6 +169,7 @@ const Quizzes = () => {
 
     const FilterQuestionsByDates = async (value:Date) => {
         console.log('value :>> ', value);
+        setShowAns(false);
         await fetchItems(value)
     }
 
@@ -201,6 +202,7 @@ const Quizzes = () => {
                             </div>
                     
                     ))}
+                     
                     {viewCard && (
                         <div className="fixed top-0 right-0">
                             <div className=" bg-secondary flex flex-col items-center gap-4 p-2 m-5">
