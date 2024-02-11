@@ -7,6 +7,7 @@ import { BsArrowUpSquareFill, BsArrowDownSquareFill } from "react-icons/bs";
 import { MdOutlineZoomInMap } from "react-icons/md";
 
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Skeleton } from "@chakra-ui/react";
+import { Datepicker } from "flowbite-react";
 type ITEM = {
     explanation: string;
     attachment: string;
@@ -39,18 +40,20 @@ const Quizzes = () => {
 
     
 
-    const fetchItems = async () => {
+    const fetchItems = async (filterByDate?: Date) => {
         try {
             const itemsCollection = await collection(db, 'items');
             const unsubscribe = onSnapshot(itemsCollection, (querySnapshot: QuerySnapshot) => {
                 const fetchedItems: ITEM[] = [];
-                const currentDate = new Date();
+                const currentDate = filterByDate || new Date();
                 // convert current Date to phillipine time zone
                 const currentDatePhilippine = currentDate.toLocaleString('en-US', {timeZone: 'Asia/Manila'});
             
                 querySnapshot.forEach((doc) => {
                     const data = doc.data().item;
-                    const itemCreatedAt = new Date(data[0].createdAt);
+                    
+                    const itemCreatedAt =  new Date(data[0].createdAt);
+
                     // convert current Date to philippine time zone 
                     const itemCreatedAtPhilippine = itemCreatedAt.toLocaleString('en-US', {timeZone: 'Asia/Manila'});
 
@@ -164,10 +167,17 @@ const Quizzes = () => {
         }
     }
 
+    const FilterQuestionsByDates = async (value:Date) => {
+        console.log('value :>> ', value);
+        await fetchItems(value)
+    }
+
 
     return (
         <Skeleton isLoaded={isLoaded}>
-  
+            <div className="flex absolute top-0 right-0 p-10">
+                <Datepicker onSelectedDateChanged={(event)=>FilterQuestionsByDates(event)}/>
+            </div>
            { 
             items.length > 0 ?
                 <div className={`flex flex-col gap-5 `}>

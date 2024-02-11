@@ -24,7 +24,7 @@ const LandingPage: FC<LandingPageProps> = ({ scroll }) => {
                 </div>
                 <div className="flex">
                     <div className="bg-primary px-[6em] cursor-pointer" onClick={scroll}>
-                        <span className="font-bold sm:text-[42px] text-[30px]">Start</span>
+                        <span className="font-bold sm:text-[42px] text-[30px] text-white">Start</span>
                     </div>
                 </div>
             </div>

@@ -25,13 +25,13 @@ export default function Home() {
           <LandingPage scroll={scrollToQuizzes} />
           <div className="flex  absolute top-0 right-0 py-10 cursor-pointer">
                 <Link href="/history">
-                  <div className="bg-primary p-2 hover:bg-primary/90">
+                  <div className="p-2">
                       <FaHistory size={26}/>
                   </div>
                 </Link>
             </div>
         </div>
-        <div ref={quizzesRef} className='min-h-screen flex flex-col items-center justify-center sm:p-24 p-[2em]'>
+        <div ref={quizzesRef} className='min-h-screen flex flex-col items-center justify-center sm:p-24 p-[2em] relative '>
           <Quizzes />
         </div>
       </div>

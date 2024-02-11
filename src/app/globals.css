@@ -6,7 +6,7 @@
 
 *{
   font-family: 'Inter';
-  @apply text-white 
+  @apply text-primary 
 }
 :root {
   --foreground-rgb: 0, 0, 0;
