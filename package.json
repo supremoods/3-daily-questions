@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@tinymce/tinymce-react": "^4.3.2",
     "firebase": "^10.8.0",
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.7.2",

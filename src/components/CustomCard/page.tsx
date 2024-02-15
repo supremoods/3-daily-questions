@@ -68,9 +68,9 @@ const CustomCard: FC<
                             {cardKey+1}. 
                         </span>
                         <div>
-                            <span className="text-black sm:text-2xl text-sm">
-                                {item.question}
-                            </span>
+                            <pre className="text-black sm:text-2xl text-sm whitespace-pre-wrap">
+                                <div className="text-black" dangerouslySetInnerHTML={{ __html: item.question }} />
+                            </pre>
                             {
                                 item.attachment !== '' &&                  
                                 <div className='flex m-h-[200px] w-[240px]'>
@@ -85,13 +85,27 @@ const CustomCard: FC<
                             .sort() // Sort the keys alphabetically
                             .map((choiceKey, index) => (
                                 <div onClick={() => answer(choiceKey, item.answer, cardKey)} key={index}>
-                                    <span className={`text-black sm:text-2xl text-sm hover:text-primary ${
+                                    <span className={`text-black flex gap-2 sm:text-2xl text-sm hover:text-primary  ${
                                         questionStatus['selected'] === choiceKey ?
                                             questionStatus[`q${cardKey}`] === true ? 'text-green-500' : 
                                             questionStatus[`q${cardKey}`] === false ? 'text-red-500' : ''
                                             : `${questionStatus['selected']}`
                                     }`}>
-                                        {choiceKey}: {item.choices[choiceKey]}
+                                        <span  className={`text-black sm:text-2xl text-sm hover:text-primary flex ${
+                                        questionStatus['selected'] === choiceKey ?
+                                            questionStatus[`q${cardKey}`] === true ? 'text-green-500' : 
+                                            questionStatus[`q${cardKey}`] === false ? 'text-red-500' : ''
+                                            : `${questionStatus['selected']}`
+                                    }`}>
+                                          {choiceKey}: 
+                                        </span>
+                                        <div  className={`text-black sm:text-2xl text-sm hover:text-primary flex ${
+                                        questionStatus['selected'] === choiceKey ?
+                                            questionStatus[`q${cardKey}`] === true ? 'text-green-500' : 
+                                            questionStatus[`q${cardKey}`] === false ? 'text-red-500' : ''
+                                            : `${questionStatus['selected']}`
+                                    }`} dangerouslySetInnerHTML={{ __html: item.choices[choiceKey] }} />
+
                                     </span>
                                 </div>
                             
@@ -112,7 +126,8 @@ const CustomCard: FC<
                                         <span className="text-black font-bold sm:text-xl text-[12px]">Explanation</span>
                                     </div>
                                     <div>
-                                        <pre className="text-black font-bold sm:text-xl text-[12px] whitespace-pre-wrap">{item.explanation}</pre>
+                                    <div className="text-black" dangerouslySetInnerHTML={{ __html: item.explanation }} />
+
                                     </div>
                                 </div>
                             }

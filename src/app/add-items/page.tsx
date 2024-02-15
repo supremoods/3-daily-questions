@@ -3,6 +3,7 @@ import { Textarea, FormControl, FormLabel, Input, FormErrorMessage, FormHelperTe
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup'
 import React from 'react';
+import TextEditor from '@/components/TextEditor/page';
 
 const itemsSchema = Yup.array().of(
     Yup.object().shape({
@@ -15,41 +16,24 @@ const itemsSchema = Yup.array().of(
     })
 );
 
+const questionnaire : any[] =  []
 
+for(let i = 0; i < 3; i++){
+    questionnaire.push(    
+        {
+            question: '',
+            attachment: '',
+            a: '',
+            b: '',
+            c: '',
+            d: '',
+            answer: '',
+            explanation: '',
+            attachmentsExplanation: []
+        }
+    )
+}
 
-
-const questionnaire =  [
-    {
-        question: '',
-        attachment: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        answer: '',
-        explanation: ''
-    },
-    {
-        question: '',
-        attachment: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        answer: '',
-        explanation: ''
-    },
-    {
-        question: '',
-        attachment: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        answer: '',
-        explanation: ''
-    }
-]
 const initialValues = {
     questionnaire: questionnaire.map(item => ({
         question: item.question,
@@ -63,10 +47,9 @@ const initialValues = {
     }))
 };
 
-const submit = async (value: any)  => {
-    console.log('value :>> ', value);
-
-    const payload = value.questionnaire.map((e: any) => ({
+const submit = async ()  => {
+    console.log('questionnaire :>> ', questionnaire);
+    const payload = questionnaire.map((e: any) => ({
         question: e.question,
         attachment: e.attachment,
         choices: {
@@ -105,75 +88,43 @@ const AddItems = () =>{
                         <Form className='flex flex-col gap-10'>
                             {questionnaire.map((question, index) => (
                                 <Card key={index} className='p-10 flex gap-6'>
-                                    <Field name={`questionnaire[${index}].question`}>
-                                        {({ field, form }: any) => (
-                                            <FormControl isRequired>
-                                                <FormLabel className='text-primary'>Question {index + 1}</FormLabel>
-                                                <Textarea
-                                                    {...field}
-                                                    resize="none"
-                                                    placeholder="Input your question ..."
-                                                    className=' text-black'
-                                                ></Textarea>
-                                            </FormControl>
-                                        )}
-                                    </Field>
-                                    <Field name={`questionnaire[${index}].attachment`}>
-                                        {({ field, form }: any) => (
-                                            <FormControl>
-                                                <FormLabel className='text-primary'>Image</FormLabel>
-                                                <Input
-                                                    {...field}
-                                                    resize="none"
-                                                    placeholder="Add attachment link"
-                                                    className=' text-black'
-                                                ></Input>
-                                            </FormControl>
-                                        )}
-                                    </Field>
+                                    
+                                    <FormLabel id={`questionnaire[${index}].question`} className='text-primary'>Question</FormLabel>
+                                    <TextEditor 
+                                        onEditorChange={(content)=>{
+                                            console.log('content :>> ', content);
+                                            questionnaire[index].question = content}} id={`ques${index}`
+                                        } 
+                                        initVal='Input question' height={300}
+                                    />
 
-                                    <div className=' w-96'>
+                                    <div className='w-3/6'>
                                         {['a', 'b', 'c', 'd'].map((choice, choiceIndex) => (
-                                            <Field key={`${index}-${choice}`} name={`questionnaire[${index}].${choice}`}>
-                                                {({ field, form }: any) => (
-                                                    <FormControl isRequired key={`${index}-${choice}`}>
-                                                        <FormLabel className='text-primary'>{choice}</FormLabel>
-                                                        <Input
-                                                            className='w-10 text-black'
-                                                            {...field}
-                                                            resize="none"
-                                                            placeholder={`Input option ${choice.toUpperCase()}...`}
-                                                        ></Input>
-                                                    </FormControl>
-                                                )}
-                                            </Field>
+                                            <>
+                                                <FormLabel className='text-primary'>{choice}</FormLabel>
+                                                <TextEditor onEditorChange={
+                                                    (content)=>(questionnaire[index][`${choice}`] = content)
+                                                    } 
+                                                    id={`questionnaire[${index}].${choice}`} 
+                                                    initVal='Input choices' 
+                                                    height={300}
+                                                />
+                                            </>
+                                             
                                         ))}
                                     </div>
 
-                                    <Field name={`questionnaire[${index}].answer`}>
-                                        {({ field, form }: any) => (
-                                            <FormControl isRequired>
-                                                <FormLabel className='text-primary'>Answer</FormLabel>
-                                                <Input
-                                                    className=' text-black'
-                                                    {...field}
-                                                    placeholder="Input the answer"
-                                                ></Input>
-                                            </FormControl>
-                                        )}
-                                    </Field>
-                                    <Field name={`questionnaire[${index}.explanation]`}>
-                                        {({ field, form }: any) => (
-                                            <FormControl isRequired>
-                                                <FormLabel className='text-primary'>Explanation</FormLabel>
-                                                <Textarea
-                                                    className=' text-black'
-                                                    {...field}
-                                                    placeholder="Input the explanation"
-                                                ></Textarea>
-                                            </FormControl>
-                                        )}    
-                                    </Field>
+                               
+                                    <FormLabel className='text-primary'>Answer</FormLabel>
+                                    <Input
+                                        onChange={(event) => (questionnaire[index].answer = event.target.value)}
+                                        className=' text-black'
+                                        placeholder="Input the answer"
+                                    ></Input>
+                
+                                    <FormLabel className='text-primary'>Explanation</FormLabel>
+                                    <TextEditor onEditorChange={(content)=>(questionnaire[index].explanation = content)} id={`questionnaire[${index}.explanation]`} initVal='Input choices' height={300}></TextEditor>
+                                 
                                 </Card>
                             ))}
 

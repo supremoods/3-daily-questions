@@ -39,7 +39,6 @@ const Quizzes = () => {
     };
 
     
-
     const fetchItems = async (filterByDate?: Date) => {
         try {
             const itemsCollection = await collection(db, 'items');
