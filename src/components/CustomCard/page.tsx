@@ -44,7 +44,8 @@ const CustomCard: FC<
 
     const [showModal, setShowModal] = useState(false);
     const [showAnswer, setShowAnswer] = useState(false)
-
+    const [isCorrect, setCorrect] =  useState(false)
+    const [hasSelected, setHasSelected] = useState(false)
     const handleView = () => {
         view(true, cardKey);
     };
@@ -68,7 +69,7 @@ const CustomCard: FC<
                             {cardKey+1}. 
                         </span>
                         <div>
-                            <pre className="text-black sm:text-2xl text-sm whitespace-pre-wrap">
+                            <pre className="question text-black sm:text-2xl text-sm whitespace-pre-wrap">
                                 <div className="text-black" dangerouslySetInnerHTML={{ __html: item.question }} />
                             </pre>
                             {
@@ -77,63 +78,28 @@ const CustomCard: FC<
                                     <img src={item.attachment} className='object-fit h-full'/>
                                 </div>
                             }
-           
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2">
-                        {isView && Object.keys(item.choices)
-                            .sort() // Sort the keys alphabetically
-                            .map((choiceKey, index) => (
-                                <div onClick={() => answer(choiceKey, item.answer, cardKey)} key={index}>
-                                    <span className={`text-black flex gap-2 sm:text-2xl text-sm hover:text-primary  ${
-                                        questionStatus['selected'] === choiceKey ?
-                                            questionStatus[`q${cardKey}`] === true ? 'text-green-500' : 
-                                            questionStatus[`q${cardKey}`] === false ? 'text-red-500' : ''
-                                            : `${questionStatus['selected']}`
-                                    }`}>
-                                        <span  className={`text-black sm:text-2xl text-sm hover:text-primary flex ${
-                                        questionStatus['selected'] === choiceKey ?
-                                            questionStatus[`q${cardKey}`] === true ? 'text-green-500' : 
-                                            questionStatus[`q${cardKey}`] === false ? 'text-red-500' : ''
-                                            : `${questionStatus['selected']}`
-                                    }`}>
-                                          {choiceKey}: 
-                                        </span>
-                                        <div  className={`text-black sm:text-2xl text-sm hover:text-primary flex ${
-                                        questionStatus['selected'] === choiceKey ?
-                                            questionStatus[`q${cardKey}`] === true ? 'text-green-500' : 
-                                            questionStatus[`q${cardKey}`] === false ? 'text-red-500' : ''
-                                            : `${questionStatus['selected']}`
-                                    }`} dangerouslySetInnerHTML={{ __html: item.choices[choiceKey] }} />
-
-                                    </span>
-                                </div>
-                            
-                            ))}
-                    </div>
-
                     {
                         isView && 
-                        <div>
-                            <div onClick={toggleAnswer}>
-                                <span className="text-primary sm:text-2xl text-sm ">Show Answer &#8594; </span>
-                            </div>
-                            {
-                                (open && showAnswer) &&
-                                <div>
-                                    <span className="text-primary font-bold sm:text-2xl text-sm">{item.answer}</span>
-                                    <div>
-                                        <span className="text-black font-bold sm:text-xl text-[12px]">Explanation</span>
-                                    </div>
-                                    <div>
-                                    <div className="text-black" dangerouslySetInnerHTML={{ __html: item.explanation }} />
-
-                                    </div>
+                        <div className="flex">
+                                <div className="w-full grid grid-cols-2 gap-4">
+                                    {
+                                        ['A','B','C','D'].map((letter, index)=>(
+                                            <Card 
+                                            onClick={() => answer(letter, item.answer, cardKey)} 
+                                            key={index} className={`!bg-indigo-50 hover:!bg-primary/50 hover:scale-95 transition-all flex flex-col h-24 justify-center items-center ${
+                                                questionStatus['selected'] === letter.toLowerCase() ?
+                                                    questionStatus[`q${cardKey}`] === true ? '!bg-green-300' : 
+                                                    questionStatus[`q${cardKey}`] === false ? '!bg-red-300' : ''
+                                                    : ` `
+                                            }`}>{letter}</Card>
+                                        )) 
+                                    }
                                 </div>
-                            }
                         </div>
-                  }
-       
+                    }
+                 
                 </div>
                
             </Card>

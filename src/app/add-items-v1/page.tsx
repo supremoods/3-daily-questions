@@ -98,6 +98,23 @@ const AddItems = () =>{
                                         initVal='Input question' height={300}
                                     />
 
+                                    <div className='w-3/6'>
+                                        {['a', 'b', 'c', 'd'].map((choice, choiceIndex) => (
+                                            <>
+                                                <FormLabel className='text-primary'>{choice}</FormLabel>
+                                                <TextEditor onEditorChange={
+                                                    (content)=>(questionnaire[index][`${choice}`] = content)
+                                                    } 
+                                                    id={`questionnaire[${index}].${choice}`} 
+                                                    initVal='Input choices' 
+                                                    height={300}
+                                                />
+                                            </>
+                                             
+                                        ))}
+                                    </div>
+
+                               
                                     <FormLabel className='text-primary'>Answer</FormLabel>
                                     <Input
                                         onChange={(event) => (questionnaire[index].answer = event.target.value)}
@@ -105,6 +122,9 @@ const AddItems = () =>{
                                         placeholder="Input the answer"
                                     ></Input>
                 
+                                    <FormLabel className='text-primary'>Explanation</FormLabel>
+                                    <TextEditor onEditorChange={(content)=>(questionnaire[index].explanation = content)} id={`questionnaire[${index}.explanation]`} initVal='Input choices' height={300}></TextEditor>
+                                 
                                 </Card>
                             ))}
 

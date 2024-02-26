@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from "react";
-import CustomCard from "../CustomCard/page";
+import CustomCard from "../../v1/CustomCard/page";
 import { QuerySnapshot, collection, onSnapshot } from "firebase/firestore";
 import { db } from "@/app/firebaseConfig";
 import { BsArrowUpSquareFill, BsArrowDownSquareFill } from "react-icons/bs";
@@ -219,7 +219,22 @@ const Quizzes = () => {
                     )}
 
 
-                  
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>
+                                <span className="text-primary sm:text-xl text-[12px]">
+                                    Are you sure you want to show the answer?
+                                </span>
+                            </ModalHeader>
+                            <ModalFooter>
+                                <Button colorScheme="red" mr={3} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button variant="ghost" onClick={onShowAnswer}>Show Answer</Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
 
                 </div> :
                 <div className="flex flex-col justify-center">
