@@ -36,6 +36,8 @@
         font-size:12px;
     }
 
+ 
+
     p{
         @apply text-black
     }

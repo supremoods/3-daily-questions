@@ -90,7 +90,7 @@ const CustomCard: FC<
                                             onClick={() => answer(letter, item.answer, cardKey)} 
                                             key={index} className={`!bg-indigo-50 hover:!bg-primary/50 hover:scale-95 transition-all flex flex-col h-24 justify-center items-center ${
                                                 questionStatus['selected'] === letter.toLowerCase() ?
-                                                    questionStatus[`q${cardKey}`] === true ? '!bg-green-300' : 
+                                                    questionStatus[`q${cardKey}`] === true ? 'correct' : 
                                                     questionStatus[`q${cardKey}`] === false ? '!bg-red-300' : ''
                                                     : ` `
                                             }`}>{letter}</Card>
